@@ -1,28 +1,47 @@
-cmake_minimum_required(VERSION 3.14)
-
+cmake_minimum_required(VERSION 3.21)
 
 project(MenuPlay)
 
+#option(BUILD_SHARED_LIBS "Build shared libraries." OFF)
 
 add_compile_definitions(WIN_ENV=1)
+add_compile_definitions(_WINDOWS=1)
 
 #set(CMAKE_AUTOMOC ON)
 
-add_library(${PROJECT_NAME})
-add_library(${PROJECT_NAME}::${PROJECT_NAME}  ALIAS ${PROJECT_NAME})
+add_compile_definitions(MENUPLAY_LIBRARY)
+#add_definitions(-DAI_BETA)  #Switch this on, otherwise AdobeSDK will use NSString in Debug-build on Mac which will cause a compile error
 
-set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".aip")
+add_library(${PROJECT_NAME} SHARED)
+add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+
+#set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".aip")
 
 target_sources(${PROJECT_NAME} PRIVATE
-	"Source/MenuPlayID.h"
+    "Source/MenuPlaySuites.h"
+    "Source/MenuPlaySuites.cpp"
+    "Source/MenuPlayID.h"
 	"Source/MenuPlayPlugin.h"	
         "Source/MenuPlayPlugin.cpp"
-        "Source/MenuPlaySuites.h"
-        "Source/MenuPlaySuites.cpp"
+
 	"../common/source/Main.cpp"
 	"../common/source/Plugin.cpp"
 	"../common/source/SDKAboutPluginsHelper.cpp"
 	"../common/source/Suites.cpp"	
+        "../common/source/IllustratorSDK.cpp"
+        "../common/includes/IllustratorSDK.h"
+        "../common/source/FlashUIController.cpp"
+        "../common/source/SDKPlugPlug.cpp"
+        "../common/source/SDKErrors.cpp"
+        "../common/source/AppContext.cpp"
+
+        "../../illustratorapi/illustrator/AIAssert.cpp"
+        "../../illustratorapi/illustrator/IAIArtboards.cpp"
+        "../../illustratorapi/ate/IText.cpp"
+        "../../illustratorapi/ate/IThrowException.cpp"
+        "../../illustratorapi/illustrator/IAIFilePath.cpp"
+        "../../illustratorapi/illustrator/IAIStringFormatUtils.cpp"
+        "../../illustratorapi/illustrator/IAIUnicodeString.cpp"
 	"Resources/Win/MenuPlay.rc"
     	
 )
@@ -32,13 +51,27 @@ target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURR
 
 target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../common/includes>)
 target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../common/win>)
+target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../../illustratorapi>)
 target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../../illustratorapi/pica_sp>)
 target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../../illustratorapi/illustrator>)
 target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../../illustratorapi/ate>)
+target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../../illustratorapi/ate/slotextdomtypes>)
+target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../../illustratorapi/ate/legacy>)
+target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../../illustratorapi/illustrator/config>)
+target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../../illustratorapi/illustrator/config/compiler>)
+target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../../illustratorapi/illustrator/actions>)
 
+target_precompile_headers(${PROJECT_NAME}
+  PUBLIC
+    ../common/includes/IllustratorSDK.h
+)
+
+set_source_files_properties(MenuPlay.rc PROPERTIES LANGUAGE RC)
 
 foreach(LANG  C CXX RC)
     set(CMAKE_${LANG}_STANDARD_INCLUDE_DIRECTORIES ${CUSTOM_INCLUDE_DIRECTORIES})
 endforeach()
+
+target_link_libraries(${PROJECT_NAME} PUBLIC Version.lib)
 
 
