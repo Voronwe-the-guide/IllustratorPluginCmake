@@ -2,20 +2,17 @@ cmake_minimum_required(VERSION 3.21)
 
 project(MenuPlay)
 
-#option(BUILD_SHARED_LIBS "Build shared libraries." OFF)
-
 add_compile_definitions(WIN_ENV=1)
 add_compile_definitions(_WINDOWS=1)
 
-#set(CMAKE_AUTOMOC ON)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 add_compile_definitions(MENUPLAY_LIBRARY)
-#add_definitions(-DAI_BETA)  #Switch this on, otherwise AdobeSDK will use NSString in Debug-build on Mac which will cause a compile error
 
 add_library(${PROJECT_NAME} SHARED)
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
-#set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".aip")
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".aip")
 
 target_sources(${PROJECT_NAME} PRIVATE
     "Source/MenuPlaySuites.h"
@@ -34,15 +31,16 @@ target_sources(${PROJECT_NAME} PRIVATE
         "../common/source/SDKPlugPlug.cpp"
         "../common/source/SDKErrors.cpp"
         "../common/source/AppContext.cpp"
+        "Resources/Win/MenuPlay.rc"
 
         "../../illustratorapi/illustrator/AIAssert.cpp"
-        "../../illustratorapi/illustrator/IAIArtboards.cpp"
-        "../../illustratorapi/ate/IText.cpp"
+#       "../../illustratorapi/illustrator/IAIArtboards.cpp"
+#        "../../illustratorapi/ate/IText.cpp"
         "../../illustratorapi/ate/IThrowException.cpp"
-        "../../illustratorapi/illustrator/IAIFilePath.cpp"
-        "../../illustratorapi/illustrator/IAIStringFormatUtils.cpp"
-        "../../illustratorapi/illustrator/IAIUnicodeString.cpp"
-	"Resources/Win/MenuPlay.rc"
+       "../../illustratorapi/illustrator/IAIFilePath.cpp"
+ #       "../../illustratorapi/illustrator/IAIStringFormatUtils.cpp"
+     "../../illustratorapi/illustrator/IAIUnicodeString.cpp"
+
     	
 )
 
@@ -72,6 +70,6 @@ foreach(LANG  C CXX RC)
     set(CMAKE_${LANG}_STANDARD_INCLUDE_DIRECTORIES ${CUSTOM_INCLUDE_DIRECTORIES})
 endforeach()
 
-target_link_libraries(${PROJECT_NAME} PUBLIC Version.lib)
+
 
 
