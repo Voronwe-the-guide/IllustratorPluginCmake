@@ -1,0 +1,13 @@
+/illustratorapi
+/samplecode/build*
+/samplecode/output
+/samplecode/MenuPlay/out 
+/samplecode/MenuPlay/.vs
+.DS_Store
+CMakeList.txt.user
+CMakeSettings.json
+MenuPlay.exp
+MenuPlay.lib
+MenuPlay.pdb
+MenuPlay.vcxproj.user
+RC*

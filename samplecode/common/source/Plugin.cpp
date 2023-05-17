@@ -159,7 +159,7 @@ ASErr Plugin::LockPlugin(ASBoolean lock)
 
 void Plugin::GetPluginName(char *name, unsigned int maxlen)
 {
-	strncpy(name, fPluginName, maxlen);
+ //   strncpy(name, fPluginName, maxlen);
 
 	if(maxlen < strlen(fPluginName))
 	{

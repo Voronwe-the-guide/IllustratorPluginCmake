@@ -22,7 +22,7 @@
 #define kSDKMenuGroup				"SDK Group"
 #define kMenuPlayString				kMenuPlayPluginName
 #define kMenuPlayMenuGroup			"Menu Play Group"
-#define kMenuPlayGroupString		"If enabled, selection contains a group"
+#define kMenuPlayGroupString		"This is the End"
 #define kMenuPlayLockString			"If enabled, Art/Layer is unlocked"
 #define kMenuPlayGuideString		"Manually updated for guides"
 #define kMenuPlayCheckString		"Check me"

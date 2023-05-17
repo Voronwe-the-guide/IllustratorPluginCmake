@@ -107,7 +107,7 @@ extern "C" ASAPI ASErr PluginMain(char* caller, char* selector, void* message)
 #else
 			char buf[1024];
 			
-			sprintf(buf+1, "Warning: Unhandled plugin message: caller \"%s\" selector \"%s\"\n", caller, selector);
+        //	sprintf(buf+1, "Warning: Unhandled plugin message: caller \"%s\" selector \"%s\"\n", caller, selector);
 			OutputDebugStringA(buf+1);
 #endif
 #endif
